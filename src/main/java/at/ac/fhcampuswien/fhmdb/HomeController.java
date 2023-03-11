@@ -56,63 +56,6 @@ public class HomeController implements Initializable {
           // TODO add event handlers to buttons and call the regarding methods
           // either set event handlers in the fxml file (onAction) or add them here
 
-
-
-          // Sort button example:
-        /*sortBtn.setOnAction(actionEvent -> {
-            if(sortBtn.getText().equals("Sort (asc)")) {
-                // TODO sort observableMovies ascending
-                sortBtn.setText("Sort (desc)");
-
-                //add movietitles to ascList Array
-                List <String> ascList = new ArrayList<>();
-                for (int i = 0; i < observableMovies.size(); i++) {
-
-                    if(observableMovies.get(i).getTitle() != "empty"){
-                        ascList.add(observableMovies.get(i).getTitle());
-
-                    }else {
-                        System.out.println(ascList);
-                    }
-                }
-                //sort the ascList Array
-                Collections.sort(ascList);
-                System.out.println("Sorted List: " + ascList);
-
-                List <Movie> midMovieList = new ArrayList<>();
-
-                for (int i = 0; i < ascList.size(); i++) {
-                    if (observableMovies.get(i).getTitle().equals(ascList.get(i))) {
-                        System.out.println("observableMovies: " + observableMovies.get(i).getTitle() + " == " + ascList.get(i));
-                        midMovieList.add(observableMovies.get(i));
-                        //observableMovies.remove(observableMovies.get(i));
-                    } else {
-                        System.out.println("observableMovies: " + observableMovies.get(i).getTitle() + " != " + ascList.get(i));
-
-                        for (int j = i++; j < ascList.size() - i; j++) {
-
-                            if (observableMovies.get(j).getTitle().equals(ascList.get(i))) {
-                                midMovieList.add(observableMovies.get(j));
-                                System.out.println("observableMovies: " + observableMovies.get(i).getTitle() + " == " + ascList.get(i));
-
-                            } else if (observableMovies.get(j).getTitle().equals("empty")) {
-
-                            }
-                        }
-                    }
-                }
-                for (int k = 0; k < midMovieList.size(); k++) {
-                    System.out.println("midMovieList: " + midMovieList.get(k).getTitle() + " ");
-                    //observableMovies.remove(observableMovies.get(i));
-
-                }
-
-            } else {
-                // TODO sort observableMovies descending
-                sortBtn.setText("Sort (asc)");
-            }
-        });*/
-
           sortBtn.setOnAction(actionEvent -> {
               int sortClicks = 0;
               if (sortBtn.getText().equals("Sort (desc)") && sortClicks % 2 == 0) {
@@ -124,8 +67,6 @@ public class HomeController implements Initializable {
                   //sortState = SortState.DESCENDING;
                   sortBtn.setText("Sort (desc)");
               }
-
-
           });
 
           searchBtn.setOnAction(actionEvent -> {
@@ -145,65 +86,10 @@ public class HomeController implements Initializable {
                               filteredMovies.add(movie);
                           }
                       }
-
                       observableMovies.clear();
                       observableMovies.addAll(filteredMovies);
                   }
 
-
-
           });
-          /*searchBtn.setOnAction(actionEvent -> {
-              List<Movie> filteredMovies = new ArrayList<>();
-
-              if(searchField.getText() != ("")) {
-
-
-                  for (Movie movie : observableMovies) {
-                      if (movie.getTitle().toLowerCase().contains(searchField.getText().toLowerCase()) || movie.getDescription().toLowerCase().contains(searchField.getText().toLowerCase())) {
-                          filteredMovies.add(movie);
-
-                      }
-
-                  }
-                  observableMovies.clear();
-                  observableMovies.addAll(filteredMovies);
-              }
-
-          });
-
-           */
-
-          /*
-          searchField.setOnAction(actionEvent -> {
-                  List<Movie> filteredMovies = new ArrayList<>();
-
-
-                  if (searchField.toString() == null) {
-                      observableMovies.clear();
-                      observableMovies.addAll(allMovies);
-                      System.out.println("here4");
-
-                  }
-                  if(searchField.toString() != null ) {
-
-                      for (Movie movie : observableMovies) {
-                          if (movie.getTitle().toLowerCase().contains(searchField.getText().toLowerCase()) || movie.getDescription().toLowerCase().contains(searchField.getText().toLowerCase())) {
-                              filteredMovies.add(movie);
-
-                          }
-                          observableMovies.clear();
-                          observableMovies.addAll(filteredMovies);
-                      }
-                  }
-      });
-
-           */
-
-
-
-
-
     }
-
 }
