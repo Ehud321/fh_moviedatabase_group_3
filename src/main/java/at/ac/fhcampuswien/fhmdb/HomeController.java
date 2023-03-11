@@ -74,7 +74,7 @@ public class HomeController implements Initializable {
               if (genreComboBox.getValue() == null || genreComboBox.getValue() == "no filter") {
                   observableMovies.clear();
                   observableMovies.addAll(allMovies);
-              } else if (genreComboBox.getValue() != "no filter") {
+              } else {
                   observableMovies.clear();
                   observableMovies.addAll(allMovies);
                   observableMovies.removeIf(n -> !(n.getGenres().contains(genreComboBox.getValue())));
