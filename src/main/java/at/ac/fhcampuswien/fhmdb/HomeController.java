@@ -1,16 +1,14 @@
 package at.ac.fhcampuswien.fhmdb;
 
-import at.ac.fhcampuswien.fhmdb.models.Genres;
+import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.fhmdb.models.SortState;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.WeakEventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -34,6 +32,8 @@ public class HomeController implements Initializable {
     @FXML
     public JFXButton sortBtn;
 
+    public SortState sortState = SortState.NONE;
+
     public List<Movie> allMovies = Movie.initializeMovies();
 
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
@@ -51,7 +51,7 @@ public class HomeController implements Initializable {
         // TODO add genre filter items with genreComboBox.getItems().addAll(...)
         genreComboBox.setPromptText("Filter by Genre");
         genreComboBox.getItems().add("no filter");
-        genreComboBox.getItems().addAll(Genres.values());
+        genreComboBox.getItems().addAll(Genre.values());
         // TODO add event handlers to buttons and call the regarding methods
         // either set event handlers in the fxml file (onAction) or add them here
 
@@ -76,8 +76,9 @@ public class HomeController implements Initializable {
 
 
         });
+
         // Sort button example:
-        sortBtn.setOnAction(actionEvent -> {
+        /*sortBtn.setOnAction(actionEvent -> {
             if(sortBtn.getText().equals("Sort (asc)")) {
                 // TODO sort observableMovies ascending
                 sortBtn.setText("Sort (desc)");
@@ -89,9 +90,9 @@ public class HomeController implements Initializable {
                     if(observableMovies.get(i).getTitle() != "empty"){
                         ascList.add(observableMovies.get(i).getTitle());
 
-                    }else{}
-                    System.out.println(ascList);
-
+                    }else {
+                        System.out.println(ascList);
+                    }
                 }
                 //sort the ascList Array
                 Collections.sort(ascList);
@@ -128,11 +129,36 @@ public class HomeController implements Initializable {
             } else {
                 // TODO sort observableMovies descending
                 sortBtn.setText("Sort (asc)");
-
-
             }
-        });
+        });*/
 
+          sortBtn.setOnAction(actionEvent -> {
+              int sortClicks = 0;
+              if (sortBtn.getText().equals("Sort (desc)") && sortClicks % 2 == 0) {
+                  observableMovies.sort(Comparator.comparing(Movie::getTitle));
+                  //sortState = SortState.ASCENDING;
+                  sortBtn.setText("Sort (asc)");
+              }else{
+                  observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
+                  //sortState = SortState.DESCENDING;
+                  sortBtn.setText("Sort (desc)");
+              }
+
+
+          });
+
+          /*searchBtn.setOnAction(actionEvent -> {
+              List<Movie> filteredMovies = new ArrayList<>();
+
+              for (Movie movie : observableMovies) {
+                  if ((searchField.toString() == null || movie.getTitle().toLowerCase().contains(searchField.toString().toLowerCase())
+                          || movie.getDescription().toLowerCase().contains(searchField.toString().toLowerCase()))) {
+                      filteredMovies.add(movie);
+                  }
+              }
+              observableMovies.addAll(filteredMovies);
+          });*/
 
     }
+
 }

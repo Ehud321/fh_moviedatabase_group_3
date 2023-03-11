@@ -32,7 +32,7 @@ public class MovieCell extends ListCell<Movie> {
                             : "No description available"
             );
             genres.setText(movie.getGenres() != null
-                    ? movie.getGenres().toString()
+                    ? movie.getGenres().toString().replace("[", "").replace("]", "")
                     : "No genres available"
             );
 
@@ -46,6 +46,8 @@ public class MovieCell extends ListCell<Movie> {
             title.fontProperty().set(title.getFont().font(20));
             detail.setMaxWidth(this.getScene().getWidth() - 30);
             detail.setWrapText(true);
+            genres.setMaxWidth(this.getScene().getWidth() - 30);
+            genres.setWrapText(true);
             layout.setPadding(new Insets(10));
             layout.spacingProperty().set(10);
             layout.alignmentProperty().set(javafx.geometry.Pos.CENTER_LEFT);
