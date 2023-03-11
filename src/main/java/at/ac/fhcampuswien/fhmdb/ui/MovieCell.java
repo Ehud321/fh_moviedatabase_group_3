@@ -21,8 +21,11 @@ public class MovieCell extends ListCell<Movie> {
     protected void updateItem(Movie movie, boolean empty) {
         super.updateItem(movie, empty);
 
+
         if (empty || movie == null) {
             setText(null);
+            setGraphic(null);
+
         } else {
             this.getStyleClass().add("movie-cell");
             title.setText(movie.getTitle());

@@ -29,11 +29,7 @@ public class Movie {
         return genres;
     }
 
-    public Movie getEmptyMovie() {
 
-        Movie emptyMovie = new Movie(null, null, null);
-        return emptyMovie;
-    }
 
     public static List<Movie> initializeMovies(){
         List<Movie> movies = new ArrayList<>();
