@@ -1,13 +1,14 @@
 package at.ac.fhcampuswien.fhmdb;
 
+import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
-import com.sun.net.httpserver.HttpContext;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class HomeControllerTest {
 
@@ -16,7 +17,7 @@ class HomeControllerTest {
     //Arrange?
     @BeforeAll
     public static void inti(){
-       homeController = new HomeController();
+        HomeController homeController = new HomeController();
     }
 
     @Test
@@ -28,6 +29,22 @@ class HomeControllerTest {
     }
 
     @Test
-    void
+    void getTitleTest() {
+        Movie movie = new Movie("Star Wars","A young boy kills many people", List.of(Genre.ACTION, Genre.ADVENTURE));
+        assertEquals(movie.getTitle(), "Star Wars");
+    }
+
+    @Test
+    void getDescriptionTest() {
+        Movie movie = new Movie("Gone with the Wind",
+                "1st world problems during the only real war on american soil.", List.of(Genre.ROMANCE, Genre.DRAMA, Genre.HORROR));
+        assertEquals(movie.getDescription(), "1st world problems during the only real war on american soil.");
+    }
+    @Test
+    void getGenresTest() {
+        Movie movie = new Movie("Pulp Fiction",
+                "The lives of several criminals intertwine in a series of violent and unexpected events", List.of(Genre.CRIME, Genre.DRAMA));
+        assertEquals(movie.getGenres(), List.of(Genre.CRIME, Genre.DRAMA));
+    }
 
 }
