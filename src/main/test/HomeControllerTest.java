@@ -16,7 +16,7 @@ class HomeControllerTest {
 
     //Arrange?
     @BeforeAll
-    public static void inti(){
+    public static void init(){
         HomeController homeController = new HomeController();
     }
 
@@ -46,5 +46,32 @@ class HomeControllerTest {
                 "The lives of several criminals intertwine in a series of violent and unexpected events", List.of(Genre.CRIME, Genre.DRAMA));
         assertEquals(movie.getGenres(), List.of(Genre.CRIME, Genre.DRAMA));
     }
+    @Test
+    void movies_and_oberservableMovies_are_equal(){
 
+        homeController.initializeState();
+        assertEquals(homeController.allMovies, homeController.observableMovies);
+
+    }
+
+    @Test
+    void sortBtnTest() {
+
+        init();
+        homeController.initializeState();
+        System.out.println(homeController.observableMovies.get(0).getTitle());
+        homeController.sortMovies();
+
+    }
+    @Test
+    void genreBoxTest() {
+        init();
+        homeController.initializeState();
+        homeController.genreComboBox.setValue(Genre.ACTION);
+        homeController.searchMovies();
+        System.out.println(homeController.observableMovies.get(0));
+        System.out.println(homeController.allMovies.get(0));
+
+
+    }
 }
