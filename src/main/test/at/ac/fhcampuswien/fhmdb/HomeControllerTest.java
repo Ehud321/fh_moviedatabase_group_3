@@ -29,19 +29,19 @@ class HomeControllerTest {
     }
 
     @Test
-    void getTitleTest() {
+    void get_title_test() {
         Movie movie = new Movie("Star Wars","A young boy kills many people", List.of(Genre.ACTION, Genre.ADVENTURE));
         assertEquals(movie.getTitle(), "Star Wars");
     }
 
     @Test
-    void getDescriptionTest() {
+    void get_description_test() {
         Movie movie = new Movie("Gone with the Wind",
                 "1st world problems during the only real war on american soil.", List.of(Genre.ROMANCE, Genre.DRAMA, Genre.HORROR));
         assertEquals(movie.getDescription(), "1st world problems during the only real war on american soil.");
     }
     @Test
-    void getGenresTest() {
+    void get_genres_test() {
         Movie movie = new Movie("Pulp Fiction",
                 "The lives of several criminals intertwine in a series of violent and unexpected events", List.of(Genre.CRIME, Genre.DRAMA));
         assertEquals(movie.getGenres(), List.of(Genre.CRIME, Genre.DRAMA));
@@ -55,12 +55,15 @@ class HomeControllerTest {
     }
 
     @Test
-    void sortBtnTest() {
+    void sort_btn_test() {
 
         init();
+
         homeController.initializeState();
-        System.out.println(homeController.observableMovies.get(0).getTitle());
         homeController.sortMovies();
+
+        assertEquals(homeController.allMovies.get(0), homeController.observableMovies.get(0));
+
 
     }
     @Test

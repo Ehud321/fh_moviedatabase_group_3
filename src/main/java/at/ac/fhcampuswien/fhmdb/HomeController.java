@@ -51,7 +51,6 @@ public class HomeController implements Initializable {
 
           // TODO add genre filter items with genreComboBox.getItems().addAll(...)
           genreComboBox.setPromptText("Filter by Genre");
-          genreComboBox.getItems().add("no filter");
           genreComboBox.getItems().addAll(Genre.values());
           // TODO add event handlers to buttons and call the regarding methods
           // either set event handlers in the fxml file (onAction) or add them here
@@ -75,7 +74,7 @@ public class HomeController implements Initializable {
     public void sortMovies() {
         int sortClicks = 0;
         if (sortBtn.getText().equals("Sort (desc)") && sortClicks % 2 == 0) {
-            observableMovies.sort(Comparator.comparing(Movie::getTitle));
+            observableMovies.sort(Comparator.comparing(Movie::getTitle)); // Class Name :: Methode Name (Lambda expr.?)
             sortState = SortState.ASCENDING;
             sortBtn.setText("Sort (asc)");
         } else {
@@ -86,18 +85,20 @@ public class HomeController implements Initializable {
     }
     public void searchMovies() {
         List<Movie> filteredMovies = new ArrayList<>();
-        if (genreComboBox.getValue() == null || genreComboBox.getValue() == "no filter") {
+        if (genreComboBox.getValue() == null || genreComboBox.getValue() == Genre.NO_FILTER) {
             observableMovies.clear();
             observableMovies.addAll(allMovies);
-        } else if (genreComboBox.getValue() != "no filter") {
+        } else if (genreComboBox.getValue() != Genre.NO_FILTER) {
             observableMovies.clear();
             observableMovies.addAll(allMovies);
             observableMovies.removeIf(n -> !(n.getGenres().contains(genreComboBox.getValue())));
         }
 
               if(searchField.getText() != null) {
-                  for (Movie movie : observableMovies) {
-                      if (movie.getTitle().toLowerCase().contains(searchField.getText().toLowerCase()) || movie.getDescription().toLowerCase().contains(searchField.getText().toLowerCase()) || movie.getGenres().toString().toLowerCase().contains(searchField.getText().toLowerCase())) {
+                  for (Movie movie : observableMovies) { // Datentyp Platzhalter : Menge
+                      if (movie.getTitle().toLowerCase().contains(searchField.getText().toLowerCase())
+                              || movie.getDescription().toLowerCase().contains(searchField.getText().toLowerCase())
+                              || movie.getGenres().toString().toLowerCase().contains(searchField.getText().toLowerCase())) {
                               filteredMovies.add(movie);
                           }
                       }
