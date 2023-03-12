@@ -67,7 +67,6 @@ public class HomeController implements Initializable {
     }
 
     public void initializeState() {
-
         observableMovies.clear();
         observableMovies.addAll(allMovies);
 

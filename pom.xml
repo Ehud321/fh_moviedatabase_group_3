@@ -49,6 +49,21 @@
     <build>
         <plugins>
             <plugin>
+
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M9</version>
+                    <configuration>
+                        <excludes>
+                            <exclude>DataTest.java</exclude>
+                        </excludes>
+                        <includes>
+                            <include>DataCheck.java</include>
+                        </includes>
+                    </configuration>
+            </plugin>
+
+            <plugin>
+
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.1</version>
