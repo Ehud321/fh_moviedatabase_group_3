@@ -7,6 +7,8 @@ public class Movie {
     private String title;
     private String description;
     private List genres;
+    private String director;
+    private int year;
 
     // TODO add more properties here
 
@@ -15,6 +17,14 @@ public class Movie {
         this.description = description;
         this.genres = genres;
 
+    }
+
+    public Movie(String title, String description, List genres, String director, int year) {
+        this.title = title;
+        this.description = description;
+        this.genres = genres;
+        this.director = director;
+        this.year = year;
     }
 
     public String getTitle() {
@@ -66,14 +76,6 @@ public class Movie {
         this.director = director;
     }
 
-    public Arrays getMainCast() {
-        return mainCast;
-    }
-
-    public void setMainCast(Arrays mainCast) {
-        this.mainCast = mainCast;
-    }
-
     public int getYear() {
         return year;
     }
@@ -85,5 +87,6 @@ public class Movie {
 
 
     public <R> R getMainCast() {
+        return getMainCast();
     }
 }
