@@ -55,7 +55,6 @@ public class MovieAPI {
 
         movies.stream()
                 .filter(Objects::nonNull)
-                .map(Movie::getMainCast)
                 .flatMap(List::stream)
                 .map(Object::toString)
                 .forEach(actor -> {
