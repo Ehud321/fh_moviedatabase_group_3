@@ -11,17 +11,15 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.*;
 
 public class HomeController implements Initializable {
     @FXML
@@ -34,6 +32,7 @@ public class HomeController implements Initializable {
     public JFXComboBox genreComboBox;
     @FXML
     public JFXButton sortBtn;
+
     public SortState sortState = SortState.NONE;
     public List<Movie> allMovies = Movie.initializeMovies();
     public final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
@@ -102,8 +101,7 @@ public class HomeController implements Initializable {
             observableMovies.clear();
             observableMovies.addAll(filteredMovies);
         }
-
-
     }
+
 
 }

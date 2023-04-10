@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Movie {
-    private String title;
-    private String description;
-    private List genres;
-    private String director;
-    private int year;
+    private final String title;
+    private final String description;
+    private final List genres;
+    private List<String> director = new ArrayList<>();
+    private List<String> writers = new ArrayList<>();
+    private List<String> mainCast = new ArrayList<>();
+    private int releaseyear;
+    private int lengthInMinutes;
+    private double rating;
 
     // TODO add more properties here
 
@@ -19,12 +23,24 @@ public class Movie {
 
     }
 
-    public Movie(String title, String description, List genres, String director, int year) {
+    public Movie(String title, String description, List genres, List<String> director,
+                 List<String> writers, List<String> mainCast, int releaseyear, int lengthInMinutes, double rating) {
         this.title = title;
         this.description = description;
         this.genres = genres;
         this.director = director;
-        this.year = year;
+        this.writers = writers;
+        this.mainCast = mainCast;
+        this.releaseyear = releaseyear;
+        this.lengthInMinutes = lengthInMinutes;
+        this.rating = rating;
+    }
+
+    public Movie(String title, String description, List genres, String director, int releaseyear) {
+        this.title = title;
+        this.description = description;
+        this.genres = genres;
+        this.releaseyear = releaseyear;
     }
 
     public String getTitle() {
@@ -67,26 +83,31 @@ public class Movie {
 
         return movies;
     }
+    public int getReleaseYear() {
+        return releaseyear;
+    }
 
-    public String getDirector() {
+    public int getLengthInMinutes() {
+        return lengthInMinutes;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public List<String> getDirector() {
         return director;
     }
 
-    public void setDirector(String director) {
-        this.director = director;
+    public List<String> getWriters() {
+        return writers;
     }
 
-    public int getYear() {
-        return year;
+    public List<String> getMainCast() {
+        return mainCast;
     }
-
 
     public interface MyFunctionalInterface {
         void myMethod(String message);
     }
-
-
-    public <R> R getMainCast() {
-        return getMainCast();
     }
-}
