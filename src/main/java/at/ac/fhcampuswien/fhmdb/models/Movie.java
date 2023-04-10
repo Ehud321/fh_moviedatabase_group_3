@@ -1,12 +1,16 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Movie {
     private String title;
     private String description;
     private List genres;
+    private String director;
+    private Arrays mainCast;
+    private int year;
 
     // TODO add more properties here
 
@@ -56,6 +60,31 @@ public class Movie {
                 "A man hires existential detectives to help him uncover the meaning of his life", List.of(Genre.COMEDY, Genre.DRAMA)));
 
         return movies;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public Arrays getMainCast() {
+        return mainCast;
+    }
+
+    public void setMainCast(Arrays mainCast) {
+        this.mainCast = mainCast;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+
+    public interface MyFunctionalInterface {
+        void myMethod(String message);
     }
 
 

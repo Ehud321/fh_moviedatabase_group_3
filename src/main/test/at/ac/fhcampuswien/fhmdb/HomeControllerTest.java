@@ -20,6 +20,10 @@ class HomeControllerTest {
         HomeController homeController = new HomeController();
     }
 
+    public static void setHomeController(HomeController homeController) {
+        HomeControllerTest.homeController = homeController;
+    }
+
     @Test
     void show_initial_unfiltered_movies(){
         //Act?
