@@ -1,16 +1,12 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Movie {
     private String title;
     private String description;
     private List genres;
-    private String director;
-    private Arrays mainCast;
-    private int year;
 
     // TODO add more properties here
 
@@ -88,4 +84,6 @@ public class Movie {
     }
 
 
+    public <R> R getMainCast() {
+    }
 }
