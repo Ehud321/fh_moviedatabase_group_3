@@ -1,46 +1,57 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Movie {
+    private final String id;
     private final String title;
     private final String description;
-    private final List genres;
-    private List<String> director = new ArrayList<>();
-    private List<String> writers = new ArrayList<>();
-    private List<String> mainCast = new ArrayList<>();
-    private int releaseyear;
-    private int lengthInMinutes;
-    private double rating;
+    private final List<Genre> genres;
+    private final int releaseYear;
+    private final String imgUrl;
+    private final int lengthInMinutes;
+    private final List<String> directors = new ArrayList<>();
+    private final List<String> writers = new ArrayList<>();
+    private final List<String> mainCast = new ArrayList<>();
+    private final double rating;
 
-    // TODO add more properties here
 
-    public Movie(String title, String description, List genres) {
+    public Movie(String title, String description, List<Genre> genres) {
         this.title = title;
         this.description = description;
         this.genres = genres;
-
+        this.id = null;
+        this.releaseYear = 0;
+        this.imgUrl = "";
+        this.lengthInMinutes = 0;
+        this.rating = 0;
     }
 
-    public Movie(String title, String description, List genres, List<String> director,
-                 List<String> writers, List<String> mainCast, int releaseyear, int lengthInMinutes, double rating) {
+    public Movie(String id, String title, String description, List<Genre> genres, int releaseYear, String imageUrl, int lengthInMinutes, List<String> directors, List<String> writers, List<String> mainCast, double rating) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.genres = genres;
-        this.director = director;
-        this.writers = writers;
-        this.mainCast = mainCast;
-        this.releaseyear = releaseyear;
+        this.releaseYear = releaseYear;
+        this.imgUrl = imageUrl;
         this.lengthInMinutes = lengthInMinutes;
         this.rating = rating;
     }
 
-    public Movie(String title, String description, List genres, String director, int releaseyear) {
-        this.title = title;
-        this.description = description;
-        this.genres = genres;
-        this.releaseyear = releaseyear;
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null) {
+            return false;
+        }
+        if(obj == this) {
+            return true;
+        }
+        if(!(obj instanceof Movie other)) {
+            return false;
+        }
+        return this.title.equals(other.title) && this.description.equals(other.description) && this.genres.equals(other.genres);
     }
 
     public String getTitle() {
@@ -51,52 +62,54 @@ public class Movie {
         return description;
     }
 
-    public List getGenres() {
+    public List<Genre> getGenres() {
         return genres;
     }
 
-
-
     public static List<Movie> initializeMovies(){
         List<Movie> movies = new ArrayList<>();
-
-        // TODO add some dummy data here
-
-
-        // Dummylist for movies
-        movies.add(new Movie("Star Wars",
-                "A young boy kills many people", List.of(Genre.ACTION, Genre.ADVENTURE)));
-        movies.add(new Movie("Gone with the Wind",
-                "1st world problems during the only real war on american soil.", List.of(Genre.ROMANCE, Genre.DRAMA, Genre.HORROR)));
-        movies.add(new Movie("Untitled movie",
-                "Test", List.of(Genre.DRAMA)));
-        movies.add(new Movie("Titanic",
-                "ship sink sad", List.of(Genre.DRAMA, Genre.ROMANCE, Genre.COMEDY)));
-        movies.add(new Movie("Wild Wild West",
-                "Will Smith fights robots in the Wild West", List.of(Genre.WESTERN, Genre.ADVENTURE, Genre.ACTION)));
-        movies.add(new Movie("Pulp Fiction",
-                "The lives of several criminals intertwine in a series of violent and unexpected events", List.of(Genre.CRIME, Genre.DRAMA)));
-        movies.add(new Movie("Princess Mononoke",
-                "A young warrior, Ashitaka, gets caught up in a struggle between the forest gods and a mining village", List.of(Genre.ANIMATION, Genre.ADVENTURE, Genre.FANTASY)));
-        movies.add(new Movie("I Heart Huckabees",
-                "A man hires existential detectives to help him uncover the meaning of his life", List.of(Genre.COMEDY, Genre.DRAMA)));
+        movies.add(new Movie(
+                "Life Is Beautiful",
+                "When an open-minded Jewish librarian and his son become victims of the Holocaust, he uses a perfect mixture of will, humor, and imagination to protect his son from the dangers around their camp." ,
+                Arrays.asList(Genre.DRAMA, Genre.ROMANCE)));
+        movies.add(new Movie(
+                "The Usual Suspects",
+                "A sole survivor tells of the twisty events leading up to a horrific gun battle on a boat, which begin when five criminals meet at a seemingly random police lineup.",
+                Arrays.asList(Genre.CRIME, Genre.DRAMA, Genre.MYSTERY)));
+        movies.add(new Movie(
+                "Puss in Boots",
+                "An outlaw cat, his childhood egg-friend, and a seductive thief kitty set out in search for the eggs of the fabled Golden Goose to clear his name, restore his lost honor, and regain the trust of his mother and town.",
+                Arrays.asList(Genre.COMEDY, Genre.FAMILY, Genre.ANIMATION)));
+        movies.add(new Movie(
+                "Avatar",
+                "A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.",
+                Arrays.asList(Genre.ANIMATION, Genre.DRAMA, Genre.ACTION)));
+        movies.add(new Movie(
+                "The Wolf of Wall Street",
+                "Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government.",
+                Arrays.asList(Genre.DRAMA, Genre.ROMANCE, Genre.BIOGRAPHY)));
 
         return movies;
     }
+
+    public String getId() {
+        return id;
+    }
+
     public int getReleaseYear() {
-        return releaseyear;
+        return releaseYear;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
     }
 
     public int getLengthInMinutes() {
         return lengthInMinutes;
     }
 
-    public double getRating() {
-        return rating;
-    }
-
-    public List<String> getDirector() {
-        return director;
+    public List<String> getDirectors() {
+        return directors;
     }
 
     public List<String> getWriters() {
@@ -107,7 +120,7 @@ public class Movie {
         return mainCast;
     }
 
-    public interface MyFunctionalInterface {
-        void myMethod(String message);
+    public double getRating() {
+        return rating;
     }
-    }
+}
