@@ -1,57 +1,71 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Movie {
     private final String id;
     private final String title;
-    private final String description;
-    private final List<Genre> genres;
+    private final List<String> genres;
     private final int releaseYear;
+    private final String description;
     private final String imgUrl;
     private final int lengthInMinutes;
-    private final List<String> directors = new ArrayList<>();
-    private final List<String> writers = new ArrayList<>();
-    private final List<String> mainCast = new ArrayList<>();
+    private final List<String> directors;
+    private final List<String> writers;
+    private final List<String> mainCast;
     private final double rating;
 
+    private boolean isInWatchlist;
 
-    public Movie(String title, String description, List<Genre> genres) {
-        this.title = title;
-        this.description = description;
-        this.genres = genres;
-        this.id = null;
-        this.releaseYear = 0;
-        this.imgUrl = "";
-        this.lengthInMinutes = 0;
-        this.rating = 0;
-    }
+    public Movie(String id, String title, List<String> genres, int releaseYear, String description, String imgUrl,
+                 int lengthInMinutes, List<String> directors, List<String> writers, List<String> mainCast, double rating) {
 
-    public Movie(String id, String title, String description, List<Genre> genres, int releaseYear, String imageUrl, int lengthInMinutes, List<String> directors, List<String> writers, List<String> mainCast, double rating) {
+        if(id == null || id.isBlank()){
+            throw new IllegalArgumentException("ID may not be null or empty");
+        }
+        if(title == null || title.isBlank()){
+            throw new IllegalArgumentException("Title may not be null or empty");
+        }
+        if(genres == null){
+            throw new IllegalArgumentException("Genre-List may not be null");
+        }
+        if(releaseYear < 1960 || releaseYear > 2023){
+            throw new IllegalArgumentException("Invalid releaseYear");
+        }
+        if(description == null || description.isBlank()){
+            throw new IllegalArgumentException("Description may not be null or empty");
+        }
+        if(imgUrl == null || imgUrl.isBlank()){
+            throw new IllegalArgumentException("Image URL may not be null or empty");
+        }
+        if(lengthInMinutes < 0){
+            throw new IllegalArgumentException("Invalid length in minutes");
+        }
+        if(directors == null){
+            throw new IllegalArgumentException("Directors-List may not be null");
+        }
+        if(writers == null){
+            throw new IllegalArgumentException("Writers-List may not be null");
+        }
+        if(mainCast == null){
+            throw new IllegalArgumentException("MainCast-List may not be null");
+        }
+        if(rating < 0.0 || rating > 10.0){
+            throw new IllegalArgumentException("Invalid rating");
+        }
+
         this.id = id;
         this.title = title;
-        this.description = description;
-        this.genres = genres;
+        this.genres = new ArrayList<>(genres);
         this.releaseYear = releaseYear;
-        this.imgUrl = imageUrl;
+        this.description = description;
+        this.imgUrl = imgUrl;
         this.lengthInMinutes = lengthInMinutes;
+        this.directors = new ArrayList<>(directors);
+        this.writers = new ArrayList<>(writers);
+        this.mainCast = new ArrayList<>(mainCast);
         this.rating = rating;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == null) {
-            return false;
-        }
-        if(obj == this) {
-            return true;
-        }
-        if(!(obj instanceof Movie other)) {
-            return false;
-        }
-        return this.title.equals(other.title) && this.description.equals(other.description) && this.genres.equals(other.genres);
     }
 
     public String getTitle() {
@@ -62,42 +76,24 @@ public class Movie {
         return description;
     }
 
-    public List<Genre> getGenres() {
-        return genres;
+    public List<String> getGenres() {
+        return new ArrayList<>(genres);
     }
 
-    public static List<Movie> initializeMovies(){
-        List<Movie> movies = new ArrayList<>();
-        movies.add(new Movie(
-                "Life Is Beautiful",
-                "When an open-minded Jewish librarian and his son become victims of the Holocaust, he uses a perfect mixture of will, humor, and imagination to protect his son from the dangers around their camp." ,
-                Arrays.asList(Genre.DRAMA, Genre.ROMANCE)));
-        movies.add(new Movie(
-                "The Usual Suspects",
-                "A sole survivor tells of the twisty events leading up to a horrific gun battle on a boat, which begin when five criminals meet at a seemingly random police lineup.",
-                Arrays.asList(Genre.CRIME, Genre.DRAMA, Genre.MYSTERY)));
-        movies.add(new Movie(
-                "Puss in Boots",
-                "An outlaw cat, his childhood egg-friend, and a seductive thief kitty set out in search for the eggs of the fabled Golden Goose to clear his name, restore his lost honor, and regain the trust of his mother and town.",
-                Arrays.asList(Genre.COMEDY, Genre.FAMILY, Genre.ANIMATION)));
-        movies.add(new Movie(
-                "Avatar",
-                "A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.",
-                Arrays.asList(Genre.ANIMATION, Genre.DRAMA, Genre.ACTION)));
-        movies.add(new Movie(
-                "The Wolf of Wall Street",
-                "Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government.",
-                Arrays.asList(Genre.DRAMA, Genre.ROMANCE, Genre.BIOGRAPHY)));
+    public List<String> getMainCast() {
+        return new ArrayList<>(mainCast);
+    }
 
-        return movies;
+    public List<String> getDirectors() {
+        return new ArrayList<>(directors);
+    }
+
+    public List<String> getWriters() {
+        return new ArrayList<>(writers);
     }
 
     public String getId() {
         return id;
-    }
-
-    public int getReleaseYear() {
-        return releaseYear;
     }
 
     public String getImgUrl() {
@@ -108,19 +104,19 @@ public class Movie {
         return lengthInMinutes;
     }
 
-    public List<String> getDirectors() {
-        return directors;
-    }
-
-    public List<String> getWriters() {
-        return writers;
-    }
-
-    public List<String> getMainCast() {
-        return mainCast;
-    }
-
     public double getRating() {
         return rating;
+    }
+
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+
+    public boolean isInWatchlist() {
+        return isInWatchlist;
+    }
+
+    public void setInWatchlist(boolean value) {
+        this.isInWatchlist = value;
     }
 }

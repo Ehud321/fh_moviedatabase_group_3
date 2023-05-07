@@ -1,63 +1,58 @@
 package at.ac.fhcampuswien.fhmdb.api;
 
-import at.ac.fhcampuswien.fhmdb.models.Genre;
+import at.ac.fhcampuswien.fhmdb.ui.ExceptionDialog;
+import at.ac.fhcampuswien.fhmdb.exception.MovieAPIException;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.google.gson.Gson;
-import okhttp3.*;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 
 public class MovieAPI {
-    private static final String URL = "http://prog2.fh-campuswien.ac.at/movies";
-    private static final String DELIMITER = "&";
+    private static final String BASE_URL = "https://prog2.fh-campuswien.ac.at";
+    private static final String ENDPOINT_MOVIES = "/movies";
+    private final OkHttpClient client;
+    private final Gson gson;
 
-    private static String buildUrl(String query, Genre genre, String releaseYear, String ratingFrom){
-        StringBuilder url = new StringBuilder(URL);
+    public MovieAPI() {
+        client = new OkHttpClient();
+        gson = new Gson();
+    }
 
-        if((query != null && !query.isEmpty()) || genre != null || releaseYear != null || ratingFrom != null){
-            url.append("?");
-            if(query != null && !query.isEmpty()){
-                url.append("query=").append(query).append(DELIMITER);
-            }
-            if(genre != null){
-                url.append("genre=").append(genre).append(DELIMITER);
-            }
-            if (releaseYear != null) {
-                url.append("releaseYear=").append(releaseYear).append(DELIMITER);
-            }
-            if (ratingFrom != null) {
-                url.append("ratingFrom=").append(ratingFrom).append(DELIMITER);
+    public List<Movie> getMovies(){
+        return this.getMoviesWithQuery(null);
+    }
+
+    public List<Movie> getMoviesWithQuery(Map<String, String> queryMap){
+        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(BASE_URL + ENDPOINT_MOVIES)).newBuilder();
+
+        if(queryMap != null){
+            for (String key: queryMap.keySet()) {
+                urlBuilder.addQueryParameter(key, queryMap.get(key));
             }
         }
-        return url.toString();
+
+        return requestMovieList(urlBuilder.build());
     }
 
-    public static List<Movie> getAllMovies(){
-        return getAllMovies(null, null, null, null);
-    }
-    public static List<Movie> getAllMovies(String query, Genre genre, String releaseYear, String ratingFrom){
-        String url = "https://prog2.fh-campuswien.ac.at/movies";
-
+    private List<Movie> requestMovieList(HttpUrl url){
         Request request = new Request.Builder()
                 .url(url)
-                .removeHeader("User-Agent")
                 .addHeader("User-Agent", "http.agent")
                 .build();
-
-        OkHttpClient client = new OkHttpClient();
-        try (Response response = client.newCall(request).execute()){
-            String responseBody = response.body().string();
-            Gson gson = new Gson();
-            Movie[] movies = gson.fromJson(responseBody, Movie[].class);
-
-            return Arrays.asList(movies);
+        try (Response response = client.newCall(request).execute()) {
+            String json = response.body().string();
+            return Arrays.asList(gson.fromJson(json, Movie[].class));
         }
-        catch (Exception e){
-            System.err.println(e.getMessage());
+        catch(IOException | NullPointerException | IllegalArgumentException e) {
+            MovieAPIException movieApiException = new MovieAPIException("Error fetching data from resource.", e);
+            ExceptionDialog.show(movieApiException);
         }
+
         return new ArrayList<>();
     }
-
 }
