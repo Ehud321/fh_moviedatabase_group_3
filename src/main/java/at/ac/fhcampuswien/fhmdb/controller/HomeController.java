@@ -101,6 +101,7 @@ public class HomeController implements Initializable {
         }
     }
 
+    @FXML
     void searchAction(ActionEvent actionEvent) {
         observableMovies.clear();
         List<Movie> filteredMovies = movieAPIProvider.getMoviesWithQuery(constructQueryMap());
